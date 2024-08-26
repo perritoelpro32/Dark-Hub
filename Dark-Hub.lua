@@ -1,63 +1,95 @@
--- Crear un ScreenGui para el Hub
-local darkHubGui = Instance.new("ScreenGui")
-darkHubGui.Name = "DarkHub"
-darkHubGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Cargar la librería Orion
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
 
--- Crear un marco principal para el Hub
-local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0.3, 0, 0.4, 0)
-mainFrame.Position = UDim2.new(0.35, 0, 0.3, 0)
-mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-mainFrame.BorderSizePixel = 0
-mainFrame.Parent = darkHubGui
-mainFrame.Draggable = true
+-- Crear la ventana principal
+local Window = OrionLib:MakeWindow({
+    Name = "Dark Hub",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "DarkHubConfig"
+})
 
--- Crear un título para el Hub
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, 0, 0.15, 0)
-titleLabel.BackgroundTransparency = 1
-titleLabel.Text = "Dark Hub"
-titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleLabel.TextSize = 28
-titleLabel.Parent = mainFrame
+-- Crear la pestaña principal en la ventana
+local MainTab = Window:MakeTab({
+    Name = "Scripts",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
--- Función para crear botones en el Hub
-local function createButton(buttonText, scriptUrl, position)
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0.8, 0, 0.15, 0)
-    button.Position = UDim2.new(0.1, 0, position, 0)
-    button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Text = buttonText
-    button.TextSize = 20
-    button.Parent = mainFrame
-
-    button.MouseButton1Click:Connect(function()
+-- Añadir botones que ejecutan scripts
+MainTab:AddButton({
+    Name = "Ejecutar Script 1",
+    Callback = function()
         local success, result = pcall(function()
-            return loadstring(game:HttpGet(scriptUrl))()
+            return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script1.lua'))()
         end)
         if not success then
-            warn("Error ejecutando el script: " .. tostring(result))
+            warn("Error ejecutando Script 1: " .. tostring(result))
         end
-    end)
-end
+    end
+})
 
--- Crear botones con diferentes scripts
-createButton("Script 1", "https://raw.githubusercontent.com/YourUsername/YourRepo/main/script1.lua", 0.25)
-createButton("Script 2", "https://raw.githubusercontent.com/YourUsername/YourRepo/main/script2.lua", 0.45)
-createButton("Script 3", "https://raw.githubusercontent.com/YourUsername/YourRepo/main/script3.lua", 0.65)
+MainTab:AddButton({
+    Name = "Ejecutar Script 2",
+    Callback = function()
+        local success, result = pcall(function()
+            return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script2.lua'))()
+        end)
+        if not success then
+            warn("Error ejecutando Script 2: " .. tostring(result))
+        end
+    end
+})
 
--- Añadir un botón de cierre
-local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0.2, 0, 0.15, 0)
-closeButton.Position = UDim2.new(0.75, 0, 0, 0)
-closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.Text = "X"
-closeButton.TextSize = 20
-closeButton.Parent = mainFrame
+MainTab:AddButton({
+    Name = "Ejecutar Script 3",
+    Callback = function()
+        local success, result = pcall(function()
+            return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script3.lua'))()
+        end)
+        if not success then
+            warn("Error ejecutando Script 3: " .. tostring(result))
+        end
+    end
+})
 
-closeButton.MouseButton1Click:Connect(function()
-    darkHubGui:Destroy()
+-- Crear una nueva pestaña llamada "Config"
+local ConfigTab = Window:MakeTab({
+    Name = "Config",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+-- Añadir un botón en la pestaña "Config" para eliminar el hub
+ConfigTab:AddButton({
+    Name = "Eliminar Hub",
+    Callback = function()
+        OrionLib:Destroy() -- Eliminar todo el hub
+    end
+})
+
+-- Función para mostrar/ocultar la ventana
+local isVisible = true
+local UserInputService = game:GetService("UserInputService")
+UserInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.LeftControl then
+        if isVisible then
+            Window:Hide()
+        else
+            Window:Show()
+        end
+        isVisible = not isVisible
+    end
 end)
+
+-- Mostrar la ventana al inicio
+OrionLib:Init()
+
+-- Notificación al usuario
+OrionLib:MakeNotification({
+    Name = "Dark Hub",
+    Content = "Presiona LeftCtrl para mostrar/ocultar el hub.",
+    Image = "rbxassetid://4483345998",
+    Time = 5
+})
 
