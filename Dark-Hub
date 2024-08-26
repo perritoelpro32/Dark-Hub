@@ -18,13 +18,13 @@ local MainTab = Window:MakeTab({
 
 -- Añadir botones que ejecutan scripts
 MainTab:AddButton({
-    Name = "Ejecutar Script 1",
+    Name = "Starving Artist",
     Callback = function()
         local success, result = pcall(function()
-            return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script1.lua'))()
+            return loadstring(game:HttpGet("https://raw.githubusercontent.com/itsnoctural/Utilities/main/Closed/StarvingArtist.lua"))()
         end)
         if not success then
-            warn("Error ejecutando Script 1: " .. tostring(result))
+            warn("Error ejecutando Script: " .. tostring(result))
         end
     end
 })
@@ -36,7 +36,7 @@ MainTab:AddButton({
             return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script2.lua'))()
         end)
         if not success then
-            warn("Error ejecutando Script 2: " .. tostring(result))
+            warn("Error ejecutando Script: " .. tostring(result))
         end
     end
 })
@@ -48,7 +48,7 @@ MainTab:AddButton({
             return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script3.lua'))()
         end)
         if not success then
-            warn("Error ejecutando Script 3: " .. tostring(result))
+            warn("Error ejecutando Script: " .. tostring(result))
         end
     end
 })
