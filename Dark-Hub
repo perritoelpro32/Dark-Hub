@@ -35,7 +35,7 @@ local MainTab = Window:MakeTab({
 MainTab:AddButton({
     Name = "Starving Artist",
     Callback = function()
-        executeScript('https://raw.githubusercontent.com/itsnoctural/Utilities/main/Closed/StarvingArtist.lua"', "Script 1")
+        executeScript('https://raw.githubusercontent.com/itsnoctural/Utilities/main/Closed/StarvingArtist.lua', "Script 1")
     end
 })
 
