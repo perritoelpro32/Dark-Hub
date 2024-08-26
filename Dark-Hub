@@ -9,6 +9,21 @@ local Window = OrionLib:MakeWindow({
     ConfigFolder = "DarkHubConfig"
 })
 
+-- Función para manejar la ejecución de scripts con manejo de errores
+local function executeScript(scriptUrl, scriptName)
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet(scriptUrl))()
+    end)
+    if not success then
+        OrionLib:MakeNotification({
+            Name = "Error",
+            Content = "Callback error en " .. scriptName,
+            Image = "rbxassetid://4483345998",
+            Time = 5
+        })
+    end
+end
+
 -- Crear la pestaña principal en la ventana
 local MainTab = Window:MakeTab({
     Name = "Scripts",
@@ -16,40 +31,25 @@ local MainTab = Window:MakeTab({
     PremiumOnly = false
 })
 
--- Añadir botones que ejecutan scripts
+-- Añadir botones que ejecutan scripts usando la función generalizada
 MainTab:AddButton({
-    Name = "Starving Artist",
+    Name = "Ejecutar Script 1",
     Callback = function()
-        local success, result = pcall(function()
-            return loadstring(game:HttpGet("https://raw.githubusercontent.com/itsnoctural/Utilities/main/Closed/StarvingArtist.lua"))()
-        end)
-        if not success then
-            warn("Error ejecutando Script: " .. tostring(result))
-        end
+        executeScript('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script1.lua', "Script 1")
     end
 })
 
 MainTab:AddButton({
     Name = "Ejecutar Script 2",
     Callback = function()
-        local success, result = pcall(function()
-            return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script2.lua'))()
-        end)
-        if not success then
-            warn("Error ejecutando Script: " .. tostring(result))
-        end
+        executeScript('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script2.lua', "Script 2")
     end
 })
 
 MainTab:AddButton({
     Name = "Ejecutar Script 3",
     Callback = function()
-        local success, result = pcall(function()
-            return loadstring(game:HttpGet('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script3.lua'))()
-        end)
-        if not success then
-            warn("Error ejecutando Script: " .. tostring(result))
-        end
+        executeScript('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script3.lua', "Script 3")
     end
 })
 
@@ -92,4 +92,3 @@ OrionLib:MakeNotification({
     Image = "rbxassetid://4483345998",
     Time = 5
 })
-
