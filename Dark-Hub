@@ -33,9 +33,9 @@ local MainTab = Window:MakeTab({
 
 -- Añadir botones que ejecutan scripts usando la función generalizada
 MainTab:AddButton({
-    Name = "Ejecutar Script 1",
+    Name = "Starving Artist",
     Callback = function()
-        executeScript('https://raw.githubusercontent.com/YourUsername/YourRepo/main/script1.lua', "Script 1")
+        executeScript('https://raw.githubusercontent.com/itsnoctural/Utilities/main/Closed/StarvingArtist.lua"', "Script 1")
     end
 })
 
